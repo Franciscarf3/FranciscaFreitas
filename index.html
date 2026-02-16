@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FF</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <style>
+    body {
+      margin: 0;
+      font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
+      background: #FAFAFA; /* nova cor */
+      display:flex;
+      justify-content:space-between; /* espaço entre sidebars e conteúdo */
+    }
+
+    /* Coluna esquerda e direita */
+    .sidebar {
+      width: 220px;
+      padding: 30px;
+    }
+
+    .sidebar h1 {
+      font-size: 14px;
+      font-weight: normal;
+      margin-bottom: 14px;
+      transition: opacity .2s ease;
+      cursor: pointer; /* agora pode clicar */
+    }
+
+    .sidebar h1:hover {
+      opacity: 0.3;
+    }
+
+    nav {
+      display: flex;
+      flex-direction: column;
+      gap: 2px; /* menos espaço entre links */
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #4d4e4d;
+      font-size: 14px;
+      position: relative;
+      padding-bottom: 2px;
+      transition: opacity .2s ease;
+    }
+
+    nav a:hover {
+      opacity: 0.6;
+    }
+
+    nav a.active::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 110%;
+      height: 1px;
+      background: black;
+    }
+
+    /* Área de conteúdo (centro) */
+    .content {
+      flex: 1;
+      padding: 30px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .item img {
+      width: 100%;
+      display: block;
+    }
+
+    .caption {
+      margin-top: 3px;
+      font-size: 14px;
+    }
+
+    nav {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      align-items: flex-start; /* evita que os links estiquem a 100% */
+    }
+
+    nav a {
+      text-decoration: none;
+      color: black;
+      font-size: 14px;
+      position: relative;
+      padding-bottom: 1px;
+      transition: opacity .2s ease;
+    }
+
+    nav a:hover {
+      opacity: 0.6;
+    }
+
+    nav a.active::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 1px;
+      background: #4d4e4d;
+    }
+
+    /* efeito de desvanecer */
+    .item {
+      opacity: 0;
+      transition: opacity 0.8s ease;
+    }
+    .item.show {
+      opacity: 1;
+    }
+
+    /* efeito de desvanecer igual para título e links */
+    .sidebar h1, nav a {
+      transition: opacity .2s ease;
+    }
+
+    .sidebar h1:hover, nav a:hover {
+      opacity: 0.3;
+    }
+
+    /* Sidebar direita em espelho */
+    .sidebar.right {
+      text-align: right; /* texto alinhado à direita */
+    }
+    .sidebar.right nav a.active::after {
+      left: auto;
+      right: 0; /* linha sublinhada encosta à direita */
+      
+    }
+    /* Coluna esquerda */
+.sidebar {
+  width: 220px;
+  padding: 30px;
+}
+
+.sidebar h1 {
+  font-size: 14px;
+  font-weight: normal;
+  margin-bottom: 14px;
+  transition: opacity .2s ease;
+  cursor: pointer;
+  color: #4d4e4d;   /* título da esquerda */
+}
+
+.sidebar nav a {
+  color: #4d4e4d;   /* links da esquerda */
+}
+
+    /* Sidebar direita em espelho */
+.sidebar.right {
+  text-align: right; /* texto alinhado à direita */
+}
+
+.sidebar.right nav {
+  align-items: flex-end; /* links encostados à direita */
+}
+
+.sidebar.right nav a.active::after {
+  left: auto;
+  right: 0; /* linha sublinhada encosta à direita */
+}
+/* Sidebar direita em espelho */
+.sidebar.right nav a.active::after {
+  left: auto;   /* desliga o alinhamento à esquerda */
+  right: 0;     /* cola o sublinhado à direita */
+}
+/* Texto do lado direito */
+.sidebar.right nav a {
+  color:#a1a1a0;
+}
+.sidebar.right h1 {
+  color: #a1a1a0;
+}
+.sidebar.right nav a.active::after {
+  content: "";
+  position: absolute;
+  right: 0;       /* encosta à direita em vez de à esquerda */
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: #a1a1a0;  /* cor da linha do lado direito */
+  
+  
+}
+.caption {
+  margin-top: 3px;
+  font-size: 14px;
+  color: #4d4e4d;         /* mesma cor que a sidebar esquerda */
+  transition: opacity .2s ease;  /* mesmo desvanecer */
+  cursor: pointer;        /* opcional: parecer "clicável" */
+}
+
+.captions {
+  display: flex;
+  justify-content: space-between; /* empurra uma para a esquerda e outra para a direita */
+  margin-top: 3px;
+}
+
+.caption {
+  font-size: 14px;
+  transition: opacity .2s ease;
+  cursor: pointer;
+}
+
+.caption:hover {
+  opacity: 0.3;
+}
+
+.caption-left {
+  color: #4d4e4d;
+}
+
+.caption-right {
+  color: #a1a1a0;
+}
+
+
+/* Responsivo para telemóveis */
+@media (max-width: 768px) {
+  body {
+    flex-direction: column;  /* empilha tudo em coluna */
+    align-items: flex-start; /* encosta tudo à esquerda */
+  }
+
+  .sidebar {
+    width: 100%;   /* ocupa largura total */
+    text-align: left; /* títulos e links alinhados à esquerda por padrão */
+  }
+
+  .sidebar.right {
+    text-align: right; /* mas a sidebar direita mantém texto alinhado à direita */
+    align-items: flex-end;
+  }
+
+  .content {
+    grid-template-columns: 1fr; /* imagens em uma coluna no telemóvel */
+    padding: 20px;
+  }
+}
+    .content {
+      display: flex;
+      flex-wrap: wrap; /* quebra linha se não couber */
+      gap: 20px;       /* espaço entre os quadrados */
+    }
+
+    .item {
+      width: 300px;      /* tamanho do quadrado */
+      height: 300px;
+      overflow: hidden;  /* corta o excesso da imagem */
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end; /* legenda no fundo */
+    }
+
+    .item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* mantém proporção e corta */
+    }
+    
+  </style>
+
+<head>
+  <style>
+    .content {
+      display: flex;
+      flex-wrap: wrap; /* quebra linha se não couber */
+      gap: 20px;       /* espaço entre os quadrados */
+    }
+
+    .item {
+      width: 300px;      /* tamanho do quadrado */
+      height: 300px;
+      overflow: hidden;  /* corta o excesso da imagem */
+      position: relative;
+      display: none;     /* começa escondido */
+      flex-direction: column;
+      justify-content: flex-end; /* legenda no fundo */
+    }
+
+    .item.show {
+      display: flex; /* só mostra quando ativo */
+    }
+
+    .item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* mantém proporção e corta */
+    }
+    
+    .item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* mantém proporção e corta */
+    }
+
+    /* === Overrides fortes da galeria (não mexer no JS) === */
+    #galleryViewer,
+    #galleryModal {
+      background: #FAFAFA !important; /* ajusta para a tua “cor suja” */
+    }
+
+    #galleryViewer .gv-img,
+    #galleryViewer img,
+    #galleryModal .gallery-image,
+    #galleryModal img {
+      border-radius: 0 !important;
+      max-width: 100% !important;
+      max-height: 95vh !important;
+      object-fit: contain !important;
+    }
+
+    #galleryViewer .gv-btn,
+    #galleryViewer .gv-prev,
+    #galleryViewer .gv-next,
+    #galleryViewer .gv-close,
+    #galleryModal .prev,
+    #galleryModal .next,
+    #galleryModal .close {
+      color: #a1a1a0 !important;
+      background: transparent !important;
+      border: none !important;
+      opacity: 0 !important;
+      transition: opacity .2s ease !important;
+    }
+
+    #galleryViewer:hover .gv-btn,
+    #galleryViewer:hover .gv-prev,
+    #galleryViewer:hover .gv-next,
+    #galleryViewer:hover .gv-close,
+    #galleryModal:hover .prev,
+    #galleryModal:hover .next,
+    #galleryModal:hover .close {
+      opacity: 1 !important;
+    }
+
+    @media (hover: none) {
+      #galleryViewer .gv-btn,
+      #galleryViewer .gv-prev,
+      #galleryViewer .gv-next,
+      #galleryViewer .gv-close,
+      #galleryModal .prev,
+      #galleryModal .next,
+      #galleryModal .close {
+        opacity: 1 !important;
+      }
+    }
+  
+/* 🔹 Layout Info: Coluna Única Central e Alinhada ao Topo */
+.info.show {
+  display: block;           /* Muda de flex para block para empilhar */
+  width: 250px;             /* Largura fixa para o texto não espalhar */
+  margin: 0 auto;           /* Centra a coluna no meio do ecrã */
+  padding-top: 30px;        /* Mesma margem superior das sidebars para alinhar o topo */
+}
+
+.info-col {
+  font-size: 14px;
+  line-height: 1.2;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin-bottom: 30px;      /* Espaço entre o bloco PT e o bloco EN */
+}
+
+.info-col.left {
+  color: #4d4e4d;
+  text-align: left;         /* Alinha o texto à esquerda dentro da coluna */
+}
+
+.info-col.right {
+  color: #a1a1a0;
+  text-align: left;         /* Agora também à esquerda para parecer uma lista única */
+}
+
+.info-col p {
+  margin: 0 0 4px 0;
+}
+
+/* Ajuste para Telemóvel */
+@media (max-width: 768px) {
+  .info.show {
+    margin-left: 30px;      /* No telemóvel encosta à esquerda com o resto */
+    width: auto;
+  }
+}
+
+
+
+
+    
+
+  </style>
+</head>
+
+  </style>
+  
+</head>
+
+
+<body>
+  <!-- ... resto do conteúdo ... -->
+
+  <!-- Viewer da galeria -->
+  <div id="galleryViewer">
+    <button class="nav prev">❮</button>
+    <img src="" alt="gallery image">
+    <button class="nav next">❯</button>
+    <button class="close">×</button>
+    
+  </div>
+</body>
+
+  </style>
+  
+  
+
+  
+
+
+<body>
+  <!-- Sidebar esquerda -->
+  <div class="sidebar left">
+    <h1 id="home">Francisca Freitas</h1>
+    <nav>
+      <a href="#arquitetura" class="active">Arquitetura</a>
+      <a href="#objetos">Objetos</a>
+      <a href="#rascunhos">Rascunhos de Escrita</a>
+      <a href="#fotografia">Fotografia</a>
+      <a href="#info">Info</a>
+    </nav>
+  </div>
+
+  <!-- Conteúdo -->
+  <div class="content">
+    <!-- Projetos de Arquitetura -->
+    <div class="item" data-sub="arquitetura">
+      <img src="images/tentativa22.png" alt="">
+      <div class="captions">
+        <div class="caption caption-left">Hipopsia</div>
+        <div class="caption caption-right">Hipopsy Chamber</div>
+      </div>
+    </div>
+
+    <div class="item" data-sub="arquitetura">
+      <img src="images/interface1.png" alt="">
+      <div class="captions">
+        <div class="caption caption-left">Interface Ginjal</div>
+      </div>
+    </div>
+
+    <!-- Projetos de Objetos -->
+    <div class="item" data-sub="objetos">
+      <img src="img3.jpg" alt="">
+      <div class="captions">
+        <div class="caption caption-left">Bue fixe</div>
+        <div class="caption caption-right">Bom fish</div>
+      </div>
+    </div>
+
+    <!-- Projetos de Rascunhos -->
+    <div class="item" data-sub="rascunhos">
+      <img src="img4.jpg" alt="">
+      <div class="captions">
+        <div class="caption caption-left">Outro</div>
+        <div class="caption caption-right">Concept</div>
+      </div>
+    </div>
+
+    <!-- Projetos de Fotografia -->
+    <div class="item" data-sub="fotografia">
+      <img src="img5.jpg" alt="">
+      <div class="captions">
+        <div class="caption caption-left">Outro</div>
+        <div class="caption caption-right">2023</div>
+      </div>
+    </div>
+
+    <div class="item" data-sub="fotografia">
+      <img src="img6.jpg" alt="">
+      <div class="captions">
+        <div class="caption caption-left">Outro</div>
+        <div class="caption caption-right">Study</div>
+      </div>
+    </div>
+  </div>
+  
+<!-- 🔹 Info apenas -->
+<div class="item" data-sub="info">
+  <div class="info-col left">
+    <p>Francisca Freitas</p>
+    <p>Aspirante a Arquiteta</p>
+    <p>Da Madeira, em Lisboa, Portugal</p>
+  </div>
+
+  <div class="info-col right">
+    <p>Francisca Freitas</p>
+    <p>Aspiring Architect</p>
+    <p>From Madeira, in Lisbon, Portugal</p>
+  </div>
+</div>
+
+
+
+
+
+  <!-- Sidebar direita -->
+  <div class="sidebar right">
+    <h1 id="homeRight">FF</h1>
+    <nav>
+      <a href="#arquitetura">Architecture</a>
+      <a href="#objetos">Objects</a>
+      <a href="#rascunhos">Writing Drafts</a>
+      <a href="#fotografia">Photography</a>
+      <a href="#info">Info</a>
+    </nav>
+  </div>
+
+  <script>
+  const links = document.querySelectorAll("nav a");
+  const items = document.querySelectorAll(".item, .info");
+  const home = document.getElementById("home");
+  const homeRight = document.getElementById("homeRight");
+  const infoSection = document.getElementById("infoSection"); // 🔹 novo
+
+  function mostrarSub(sub) {
+    // Esconde todos os items
+    items.forEach(el => {
+      if (el.dataset.sub === sub) el.classList.add("show");
+      else el.classList.remove("show");
+    });
+
+    // 🔹 Mostra/esconde a secção Info
+    if (infoSection) {
+      if (sub === "info") {
+        infoSection.classList.add("show");
+      } else {
+        infoSection.classList.remove("show");
+      }
+    }
+  }
+
+  function fecharViewerSeAberto() {
+    if (window.__closeGallery) {
+      window.__closeGallery(); // fecha via função do viewer (se já foi registada)
+      return;
+    }
+    // fallback caso a função global ainda não exista
+    const v = document.getElementById("galleryViewer");
+    if (v && v.style.display !== "none") {
+      v.style.display = "none";
+      v.setAttribute("aria-hidden", "true");
+    }
+  }
+
+  links.forEach(link => {
+    link.addEventListener("click", function(e) {
+      e.preventDefault();
+      const sub = this.getAttribute("href").substring(1);
+
+      // 1) fecha a galeria se estiver aberta
+      fecharViewerSeAberto();
+
+      // 2) ativa link
+      links.forEach(l => l.classList.remove("active"));
+      this.classList.add("active");
+
+      // 3) mostra só os projetos do sub escolhido
+      mostrarSub(sub);
+    });
+  });
+
+  [home, homeRight].forEach(h => {
+    h.addEventListener("click", () => {
+      fecharViewerSeAberto(); // fecha primeiro
+      items.forEach(el => el.classList.remove("show"));
+      if (infoSection) infoSection.classList.remove("show"); // 🔹 também esconde o info
+      links.forEach(l => l.classList.remove("active"));
+    });
+  });
+
+  mostrarSub("arquitetura");
+</script>
+
+</script>
+
+  </script>
+  <script>
+(function () {
+  function boot() {
+    const content = document.querySelector(".content");
+    if (!content) return;
+
+    // ---- injeta CSS minimalista da galeria (mantém funcionamento) ----
+    if (!document.getElementById("gv-styles")) {
+      const st = document.createElement("style");
+      st.id = "gv-styles";
+      st.textContent = `
+      #galleryViewer{
+  position:fixed; 
+  z-index:9999; 
+  background:#FAFAFA;
+  top:0; 
+  bottom:0; 
+  align-items:center; 
+  justify-content:center; 
+  padding:24px;
+
+  /* fade in/out */
+  display:flex;           /* mantém flex SEMPRE */
+  opacity:0; 
+  visibility:hidden;
+  transition:opacity .5s ease, visibility .5s ease;
+}
+#galleryViewer.is-visible {
+  opacity:1;
+  visibility:visible;
+}
+
+#galleryViewer .gv-img{
+  max-width:90%; 
+  max-height:85vh; 
+  border-radius:0; 
+  object-fit:contain;
+}
+#galleryViewer .gv-btn{
+  position:absolute; 
+  border:0; 
+  background:transparent; 
+  cursor:pointer;
+  color:#333; 
+  opacity:0; 
+  transition:opacity .2s ease;
+}
+#galleryViewer:hover .gv-btn { opacity:1; }
+#galleryViewer .gv-prev, #galleryViewer .gv-next{
+  top:50%; 
+  transform:translateY(-50%);
+}
+#galleryViewer .gv-prev{ left:-48px; }
+#galleryViewer .gv-next{ right:-48px; }
+#galleryViewer .gv-close{ top:16px; right:-48px; }
+#galleryViewer svg{
+  width:24px; 
+  height:24px; 
+  stroke:currentColor; 
+  stroke-width:2;
+  fill:none; 
+  stroke-linecap:round; 
+  stroke-linejoin:round;
+}
+#galleryViewer .gv-close svg {
+  width:18px;  
+  height:18px;
+}
+
+
+      `;
+      document.head.appendChild(st);
+    }
+    
+
+    // ---- cria o viewer centrado na coluna do meio ----
+    const viewer = document.createElement("div");
+    viewer.id = "galleryViewer";
+    viewer.setAttribute("aria-hidden", "true");
+    viewer.innerHTML = `
+      <button class="gv-btn gv-close" aria-label="Fechar">
+        <svg viewBox="0 0 24 24"><path d="M6 6l12 12M6 18L18 6"/></svg>
+      </button>
+      <button class="gv-btn gv-prev" aria-label="Anterior">
+        <svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg>
+      </button>
+      <img class="gv-img" alt="">
+      <button class="gv-btn gv-next" aria-label="Seguinte">
+        <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+      </button>
+    `;
+    document.body.appendChild(viewer);
+
+    const vImg   = viewer.querySelector(".gv-img");
+    const btnX   = viewer.querySelector(".gv-close");
+    const btnP   = viewer.querySelector(".gv-prev");
+    const btnN   = viewer.querySelector(".gv-next");
+
+    // posiciona o viewer exatamente por cima da .content (entre as sidebars)
+    function positionViewer() {
+      const r = content.getBoundingClientRect();
+      viewer.style.left  = r.left + "px";
+      viewer.style.width = r.width + "px";
+    }
+    positionViewer();
+    window.addEventListener("resize", positionViewer);
+
+
+    // ---- define as sequências de fotos por projeto (chave = src da 1ª imagem) ----
+    const galleries = {
+      "images/tentativa22.png": ["images/tentativa22.png","images/planta-espaco-1.png","images/planta-espaco-2.png","images/corte-1.png","images/corte-estranho.png","images/2tentativa.png","images/main-3d.png"],
+      "images/interface1.png":  ["images/interface1.png","images/1.jpg","images/Painel1.jpg","images/painel2 photoshopfim.jpg","images/painel3.png","images/Painel4.png","images/Painel5-min.jpg","images/painel6-min.jpg","images/processo.png","images/stefanopng.png"],
+      "img3.jpg":               ["img3.jpg","img3b.jpg","img3c.jpg"],
+      "img4.jpg":               ["img4.jpg","img4b.jpg"],
+      "img5.jpg":               ["img5.jpg","img5b.jpg","img5c.jpg"],
+      "img6.jpg":               ["img6.jpg","img6b.jpg"]
+    };
+    // (Se ainda não tiveres as extra, deixa só a primeira — funciona igual, só sem setas úteis)
+
+    let imgs = [];
+    let idx = 0;
+
+    function openGallery(arr) {
+  imgs = arr && arr.length ? arr : [];
+  idx = 0;
+  vImg.src = imgs[idx] || "";
+  viewer.classList.add("is-visible"); // ativa o fade-in
+  viewer.setAttribute("aria-hidden", "false");
+  positionViewer(); // garante alinhamento no momento da abertura
+}
+
+function closeGallery() {
+  viewer.classList.remove("is-visible"); // ativa o fade-out
+  viewer.setAttribute("aria-hidden", "true");
+}
+
+window.__closeGallery = closeGallery;
+
+    function show(i) {
+      if (!imgs.length) return;
+      idx = (i + imgs.length) % imgs.length;
+      vImg.src = imgs[idx];
+    }
+
+    btnX.addEventListener("click", closeGallery);
+    btnP.addEventListener("click", () => show(idx - 1));
+    btnN.addEventListener("click", () => show(idx + 1));
+    document.addEventListener("keydown", (e) => {
+      if (!viewer.classList.contains("is-visible")) return;
+      if (e.key === "Escape") closeGallery();
+      if (e.key === "ArrowLeft") show(idx - 1);
+      if (e.key === "ArrowRight") show(idx + 1);
+    });
+
+    // ---- Controlos por Touch (Arrastar no telemóvel) ----
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    viewer.addEventListener('touchstart', e => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, {passive: true});
+
+    viewer.addEventListener('touchend', e => {
+      touchEndX = e.changedTouches[0].screenX;
+      const swipeDistance = touchEndX - touchStartX;
+      if (swipeDistance < -50) show(idx + 1); // Próxima foto
+      if (swipeDistance > 50) show(idx - 1);  // Foto anterior
+    }, {passive: true});
+
+    // ---- liga imagem e legenda de cada item ----
+    document.querySelectorAll(".content .item").forEach(item => {
+      const imgEl = item.querySelector("img");
+      const caps  = item.querySelector(".captions");
+      const key   = imgEl ? imgEl.getAttribute("src") : null;
+      const arr   = key && galleries[key] ? galleries[key] : key ? [key] : [];
+
+      function handleOpen(e){
+        e.stopPropagation();
+        openGallery(arr);
+      }
+      if (imgEl) imgEl.addEventListener("click", handleOpen);
+      if (caps)  caps.addEventListener("click", handleOpen);
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", boot);
+  } else {
+    boot();
+  }
+})();
+
+</script>
+
+
+</body>
+</html>
